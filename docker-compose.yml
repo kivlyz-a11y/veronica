@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: si_veronika_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    environment:
+      CI_ENVIRONMENT: ${CI_ENVIRONMENT:-production}
+      app.baseURL: ${APP_URL:-http://localhost:8080/}
+      app.indexPage: ""
+      app.defaultLocale: id
+      app.appTimezone: Asia/Makassar
+      database.default.hostname: ${DB_HOST:-db}
+      database.default.database: ${DB_DATABASE:-si_veronika}
+      database.default.username: ${DB_USERNAME:-veronika_user}
+      database.default.password: ${DB_PASSWORD:-veronika_secret_password}
+      database.default.DBDriver: MySQLi
+      database.default.port: ${DB_PORT:-3306}
+      database.default.charset: utf8mb4
+      database.default.DBCollat: utf8mb4_unicode_ci
+      WHATSAPP_PROVIDER: ${WHATSAPP_PROVIDER:-waha}
+      WHATSAPP_API_URL: ${WHATSAPP_API_URL:-http://36.95.108.50:3000}
+      WHATSAPP_API_KEY: ${WHATSAPP_API_KEY:-secret123}
+      WHATSAPP_SESSION: ${WHATSAPP_SESSION:-test}
+      WHATSAPP_SENDER: ${WHATSAPP_SENDER:-6285389705146}
+      WHATSAPP_TIMEOUT: 30
+      WHATSAPP_MAX_RETRY: 3
+      AUTO_MIGRATE: "true"
+    volumes:
+      - veronika_writable:/var/www/html/writable
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    container_name: si_veronika_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secret_pass}
+      MYSQL_DATABASE: ${DB_DATABASE:-si_veronika}
+      MYSQL_USER: ${DB_USERNAME:-veronika_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-veronika_secret_password}
+    volumes:
+      - veronika_db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  veronika_writable:
+    name: veronika_writable_data
+  veronika_db_data:
+    name: veronika_mysql_data
