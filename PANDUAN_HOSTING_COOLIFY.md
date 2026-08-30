@@ -49,7 +49,7 @@ git push origin main
 4. Pada pilihan **Build Pack**, Coolify akan otomatis mendeteksi **Dockerfile**.
 5. Di bagian **Ports Exposes**, masukkan:
    ```
-   8080
+   80
    ```
 6. Di bagian **Domains**, masukkan domain/subdomain Anda (misal: `https://veronika.pa-penajam.go.id`).
 
