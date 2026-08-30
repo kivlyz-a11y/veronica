@@ -30,13 +30,23 @@ COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
 # Enable Apache rewrite & headers
 RUN a2enmod rewrite headers php8.2
 
-# Konfigurasi Apache DocumentRoot ke folder /public milik CodeIgniter 4
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+# Konfigurasi ServerName dan VirtualHost Apache ke /var/www/html/public
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
+    && mkdir -p /var/run/apache2 /var/lock/apache2 /var/log/apache2
 
-# Izinkan .htaccess overrides
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+RUN { \
+        echo '<VirtualHost *:80>'; \
+        echo '    ServerAdmin webmaster@localhost'; \
+        echo '    DocumentRoot /var/www/html/public'; \
+        echo '    <Directory /var/www/html/public>'; \
+        echo '        Options -Indexes +FollowSymLinks'; \
+        echo '        AllowOverride All'; \
+        echo '        Require all granted'; \
+        echo '    </Directory>'; \
+        echo '    ErrorLog ${APACHE_LOG_DIR}/error.log'; \
+        echo '    CustomLog ${APACHE_LOG_DIR}/access.log combined'; \
+        echo '</VirtualHost>'; \
+    } > /etc/apache2/sites-available/000-default.conf
 
 # Konfigurasi php.ini untuk CodeIgniter 4
 RUN { \
