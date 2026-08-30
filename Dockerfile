@@ -51,18 +51,15 @@ RUN { \
 
 WORKDIR /var/www/html
 
-# Salin composer files untuk layer caching
-COPY composer.json composer.lock* ./
-
-# Install dependensi PHP mode production (dengan ignore platform reqs agar lockfile PHP 8.2/8.3 sinkron)
-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs
-
 # Salin seluruh kode aplikasi
 COPY . .
 
-# Pastikan folder writable dibuat dengan permission www-data
+# Install dependensi PHP mode production
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs
+
+# Pastikan folder writable dibuat dengan permission yang benar
 RUN mkdir -p writable/cache writable/logs writable/session writable/uploads writable/debugbar \
-    && chown -R www-data:www-data /var/www/html \
+    && chown -R www-data:www-data /var/www/html/writable \
     && chmod -R 775 /var/www/html/writable
 
 # Salin script entrypoint
