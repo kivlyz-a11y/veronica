@@ -3,29 +3,25 @@ FROM php:8.2-apache
 # Set working directory
 WORKDIR /var/www/html
 
-# Install dependencies sistem yang dibutuhkan untuk ekstensi PHP CodeIgniter 4
+# Download official fast PHP extension installer script
+ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+
+# Install PHP extensions required for CodeIgniter 4, Dompdf, PhpSpreadsheet & QR Code
+RUN install-php-extensions \
+    intl \
+    gd \
+    zip \
+    mysqli \
+    pdo_mysql \
+    opcache \
+    bcmath \
+    mbstring
+
+# Install basic system tools
 RUN apt-get update && apt-get install -y \
     git \
-    curl \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libonig-dev \
-    libxml2-dev \
-    libzip-dev \
-    libicu-dev \
-    zip \
     unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-        intl \
-        mbstring \
-        mysqli \
-        pdo_mysql \
-        gd \
-        zip \
-        opcache \
-        bcmath \
+    curl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
@@ -56,25 +52,26 @@ RUN { \
         echo 'opcache.validate_timestamps = 1'; \
     } > /usr/local/etc/php/conf.d/veronika-custom.ini
 
-# Copy composer files terlebih dahulu untuk cache layer Docker
+# Copy composer files untuk layer caching
 COPY composer.json composer.lock* ./
 
-# Jalankan composer install (production mode)
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+# Install dependensi PHP (production mode)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Copy seluruh source code aplikasi
+# Copy seluruh source code
 COPY . .
 
-# Buat dan pastikan direktori writable ada dengan permission yang benar
+# Buat folder writable dan atur permission
 RUN mkdir -p writable/cache writable/logs writable/session writable/uploads writable/debugbar \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/writable
 
-# Salin script entrypoint
+# Salin script entrypoint dan perbaiki line endings Windows (CRLF -> LF)
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN sed -i -e 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Expose port 80 untuk web traffic
+# Expose port 80
 EXPOSE 80
 
 # Jalankan entrypoint

@@ -15,8 +15,8 @@ chmod -R 775 /var/www/html/writable
 # Jika AUTO_MIGRATE diaktifkan di environment variable, jalankan migrasi database
 if [ "$AUTO_MIGRATE" = "true" ] || [ "$AUTO_MIGRATE" = "1" ]; then
     echo "[SI VERONIKA] Menjalankan migrasi database otomatis..."
-    php /var/www/html/spark migrate --force || echo "[SI VERONIKA] Migrasi database dilewati / belum siap."
+    php /var/www/html/spark migrate --force || echo "[SI VERONIKA] Migrasi database dilewati / belum terhubung."
 fi
 
-# Jalankan perintah utama kontainer (misalnya apache2-foreground)
+# Jalankan perintah utama kontainer
 exec "$@"
