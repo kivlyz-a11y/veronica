@@ -1,79 +1,40 @@
-FROM php:8.2-apache
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Download official fast PHP extension installer script
-ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-
-# Install PHP extensions required for CodeIgniter 4, Dompdf, PhpSpreadsheet & QR Code
-RUN install-php-extensions \
-    intl \
-    gd \
-    zip \
-    mysqli \
-    pdo_mysql \
-    opcache \
-    bcmath \
-    mbstring
-
-# Install basic system tools
-RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    curl \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install Composer
-COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer
-
-# Enable Apache mod_rewrite & mod_headers
-RUN a2enmod rewrite headers
+FROM serversideup/php:8.2-apache
 
 # Konfigurasi Apache DocumentRoot ke folder /public milik CodeIgniter 4
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+ENV WEB_DOCUMENT_ROOT=/var/www/html/public
+ENV PHP_TIMEZONE=Asia/Makassar
+ENV PHP_MEMORY_LIMIT=256M
+ENV PHP_POST_MAX_SIZE=25M
+ENV PHP_UPLOAD_MAX_FILESIZE=20M
+ENV PHP_MAX_EXECUTION_TIME=120
+ENV PHP_OPCACHE_ENABLE=1
 
-# Izinkan .htaccess overrides
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+# Beralih ke user root untuk permission dan setup berkas
+USER root
 
-# Konfigurasi PHP Production
-RUN { \
-        echo 'memory_limit = 256M'; \
-        echo 'upload_max_filesize = 20M'; \
-        echo 'post_max_size = 25M'; \
-        echo 'max_execution_time = 120'; \
-        echo 'date.timezone = Asia/Makassar'; \
-        echo 'opcache.enable = 1'; \
-        echo 'opcache.memory_consumption = 128'; \
-        echo 'opcache.interned_strings_buffer = 8'; \
-        echo 'opcache.max_accelerated_files = 4000'; \
-        echo 'opcache.validate_timestamps = 1'; \
-    } > /usr/local/etc/php/conf.d/veronika-custom.ini
+WORKDIR /var/www/html
 
-# Copy composer files untuk layer caching
-COPY composer.json composer.lock* ./
+# Salin file composer terlebih dahulu untuk caching layer
+COPY --chown=www-data:www-data composer.json composer.lock* ./
 
-# Install dependensi PHP (production mode)
+# Install dependensi PHP production secara instan (semua ekstensi intl, gd, zip, mysqli dll sudah bawaan)
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
-# Copy seluruh source code
-COPY . .
+# Salin seluruh source code proyek
+COPY --chown=www-data:www-data . .
 
-# Buat folder writable dan atur permission
+# Buat folder writable jika belum ada dan set permission
 RUN mkdir -p writable/cache writable/logs writable/session writable/uploads writable/debugbar \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/writable
 
-# Salin script entrypoint dan perbaiki line endings Windows (CRLF -> LF)
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN sed -i -e 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
-    && chmod +x /usr/local/bin/docker-entrypoint.sh
+# Pasang script inisialisasi boot (dijalankan otomatis oleh s6-overlay saat start)
+COPY docker-entrypoint.sh /etc/entrypoint.d/99-veronika.sh
+RUN sed -i -e 's/\r$//' /etc/entrypoint.d/99-veronika.sh \
+    && chmod +x /etc/entrypoint.d/99-veronika.sh
 
-# Expose port 80
-EXPOSE 80
+# Beralih kembali ke user aman www-data
+USER www-data
 
-# Jalankan entrypoint
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["apache2-foreground"]
+# Port default yang digunakan serversideup adalah 8080
+EXPOSE 8080
