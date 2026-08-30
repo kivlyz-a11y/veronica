@@ -30,9 +30,15 @@
             <!-- Navigation Tabs -->
             <ul class="nav nav-pills custom-pills p-2 bg-white rounded-4 shadow-sm mb-4 border" id="settingsTab" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
-                    <button class="nav-link active w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2 rounded-3" id="tab-templates-btn" data-bs-toggle="pill" data-bs-target="#tab-templates" type="button" role="tab">
+                    <button class="nav-link active w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2 rounded-3" id="tab-gateway-btn" data-bs-toggle="pill" data-bs-target="#tab-gateway" type="button" role="tab">
+                        <i class="bi bi-whatsapp fs-5 text-success"></i>
+                        <span>WhatsApp Gateway</span>
+                    </button>
+                </li>
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2 rounded-3" id="tab-templates-btn" data-bs-toggle="pill" data-bs-target="#tab-templates" type="button" role="tab">
                         <i class="bi bi-chat-square-quote fs-5 text-warning"></i>
-                        <span>Template Pesan WhatsApp</span>
+                        <span>Template Pesan</span>
                     </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
@@ -43,22 +49,115 @@
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
                     <button class="nav-link w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2 rounded-3" id="tab-service-btn" data-bs-toggle="pill" data-bs-target="#tab-service" type="button" role="tab">
-                        <i class="bi bi-camera-video fs-5 text-success"></i>
-                        <span>Pengaturan Zoom & Layanan</span>
+                        <i class="bi bi-camera-video fs-5 text-info"></i>
+                        <span>Zoom & Layanan</span>
                     </button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
                     <button class="nav-link w-100 fw-bold py-2 d-flex align-items-center justify-content-center gap-2 rounded-3" id="tab-cron-btn" data-bs-toggle="pill" data-bs-target="#tab-cron" type="button" role="tab">
-                        <i class="bi bi-clock-history fs-5 text-info"></i>
-                        <span>Otomasi & Scheduler</span>
+                        <i class="bi bi-clock-history fs-5 text-secondary"></i>
+                        <span>Otomasi / Cron</span>
                     </button>
                 </li>
             </ul>
 
             <div class="tab-content" id="settingsTabContent">
+
+                <!-- ================= TAB 0: WHATSAPP GATEWAY CONFIGURATION ================= -->
+                <div class="tab-pane fade show active" id="tab-gateway" role="tabpanel">
+                    <div class="card card-panel p-4 p-md-5 mb-4 border-0 shadow-sm">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1">
+                                    <i class="bi bi-whatsapp text-success me-2"></i> Konfigurasi Server WhatsApp Gateway
+                                </h5>
+                                <small class="text-muted">Atur koneksi API WAHA (WhatsApp HTTP API), generic HTTP gateway, atau mode simulasi pengujian.</small>
+                            </div>
+                        </div>
+
+                        <?php
+                        $currentProvider = $settings['wa_provider'] ?? env('WHATSAPP_PROVIDER', 'waha');
+                        $currentApiUrl   = $settings['wa_api_url'] ?? env('WHATSAPP_API_URL', 'http://36.95.108.50:3000');
+                        $currentApiKey   = $settings['wa_api_key'] ?? env('WHATSAPP_API_KEY', 'secret123');
+                        $currentSession  = $settings['wa_session_name'] ?? env('WHATSAPP_SESSION', 'test');
+                        $currentSender   = $settings['wa_sender_number'] ?? env('WHATSAPP_SENDER', '6285389705146');
+                        $currentTimeout  = $settings['wa_timeout'] ?? env('WHATSAPP_TIMEOUT', '15');
+                        ?>
+
+                        <div class="row g-3 small">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">Mode Provider WhatsApp <span class="text-danger">*</span></label>
+                                <select name="wa_provider" class="form-select" id="wa_provider_select">
+                                    <option value="waha" <?= $currentProvider === 'waha' ? 'selected' : '' ?>>WAHA Server (WhatsApp HTTP API)</option>
+                                    <option value="http" <?= $currentProvider === 'http' ? 'selected' : '' ?>>Generic HTTP Gateway (Fonnte / Wablas / RuangWA)</option>
+                                    <option value="mock" <?= $currentProvider === 'mock' ? 'selected' : '' ?>>Mock / Simulator (Development & Testing - Tanpa Kirim Nyata)</option>
+                                </select>
+                                <small class="text-muted">Pilih <code>Mock</code> jika server WAHA sedang offline/maintenance agar transaksi tetap berjalan lancar.</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">Batas Timeout Koneksi</label>
+                                <select name="wa_timeout" class="form-select">
+                                    <option value="5" <?= $currentTimeout == '5' ? 'selected' : '' ?>>5 Detik (Respons Cepat)</option>
+                                    <option value="10" <?= $currentTimeout == '10' ? 'selected' : '' ?>>10 Detik (Direkomendasikan)</option>
+                                    <option value="15" <?= $currentTimeout == '15' ? 'selected' : '' ?>>15 Detik</option>
+                                    <option value="30" <?= $currentTimeout == '30' ? 'selected' : '' ?>>30 Detik (Maksimal)</option>
+                                </select>
+                                <small class="text-muted">Batas maksimal menunggu balasan server gateway sebelum dianggap gagal/timeout.</small>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-dark">URL Endpoint API Server <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-hdd-network text-success"></i></span>
+                                    <input type="text" name="wa_api_url" class="form-control font-monospace" value="<?= esc($currentApiUrl) ?>" placeholder="http://36.95.108.50:3000 atau https://waha.domainanda.com" required>
+                                </div>
+                                <small class="text-muted">Contoh: <code>http://36.95.108.50:3000</code>, <code>http://localhost:3000</code>, atau domain reverse proxy.</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">API Key / Secret Token</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-key text-muted"></i></span>
+                                    <input type="text" name="wa_api_key" class="form-control font-monospace" value="<?= esc($currentApiKey) ?>" placeholder="secret123 atau API token">
+                                </div>
+                                <small class="text-muted">Sesuai nilai <code>WAHA_API_KEY</code> pada container WAHA.</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">Nama Sesi (WAHA Session Name)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-person-badge text-muted"></i></span>
+                                    <input type="text" name="wa_session_name" class="form-control font-monospace" value="<?= esc($currentSession) ?>" placeholder="test atau default">
+                                </div>
+                                <small class="text-muted">Nama sesi WhatsApp di dashboard WAHA (contoh: <code>test</code> atau <code>default</code>).</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark">Nomor Bot / WhatsApp Pengirim</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="bi bi-telephone text-muted"></i></span>
+                                    <input type="text" name="wa_sender_number" class="form-control font-monospace" value="<?= esc($currentSender) ?>" placeholder="6285389705146">
+                                </div>
+                                <small class="text-muted">Nomor WhatsApp resmi Pengadilan Agama Penajam yang terhubung ke bot.</small>
+                            </div>
+                        </div>
+
+                        <!-- Troubleshooting Alert Box -->
+                        <div class="alert alert-warning border-0 rounded-3 mt-4 mb-0 small">
+                            <h6 class="fw-bold text-dark mb-1"><i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Mengapa Muncul Error "Connection timed out"?</h6>
+                            <ul class="mb-0 ps-3">
+                                <li>Server WAHA di <code><?= esc($currentApiUrl) ?></code> sedang mati / container docker berhenti.</li>
+                                <li>IP Public server WAHA berubah (jika menggunakan dynamic IP tanpa DDNS).</li>
+                                <li>Port <code>3000</code> diblokir oleh firewall server / provider internet / belum di-port forward di router.</li>
+                                <li><strong>Solusi Cepat:</strong> Ubah mode provider ke <strong>Mock / Simulator</strong> sementara waktu agar pemohon tetap dapat mengajukan permohonan tanpa error terhenti.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- ================= TAB 1: MESSAGE TEMPLATES ================= -->
-                <div class="tab-pane fade show active" id="tab-templates" role="tabpanel">
+                <div class="tab-pane fade" id="tab-templates" role="tabpanel">
                     <div class="card card-panel p-4 p-md-5 mb-4 border-0 shadow-sm">
                         <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
                             <div>
@@ -299,29 +398,48 @@
         <div class="card card-panel p-4 mb-4 border-0 shadow-sm">
             <h6 class="fw-bold text-dark border-bottom pb-2 mb-3 d-flex align-items-center justify-content-between">
                 <span><i class="bi bi-broadcast text-success me-2"></i> WhatsApp Gateway</span>
-                <span class="badge bg-success text-white rounded-pill px-3 py-1">ONLINE</span>
+                <?php if ($currentProvider === 'mock'): ?>
+                    <span class="badge bg-warning text-dark rounded-pill px-3 py-1">MOCK MODE</span>
+                <?php else: ?>
+                    <span class="badge bg-success text-white rounded-pill px-3 py-1"><?= strtoupper($currentProvider) ?></span>
+                <?php endif; ?>
             </h6>
 
             <div class="p-3 bg-light rounded-3 mb-3 small">
                 <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Server Mode:</span>
-                    <strong class="text-success">WAHA HTTP API</strong>
+                    <span class="text-muted">Provider:</span>
+                    <strong class="text-dark font-monospace"><?= strtoupper(esc($currentProvider)) ?></strong>
                 </div>
                 <div class="d-flex justify-content-between mb-2">
-                    <span class="text-muted">Sesi Aktif:</span>
-                    <strong class="text-dark"><i class="bi bi-check-circle-fill text-success me-1"></i>test</strong>
+                    <span class="text-muted">Server URL:</span>
+                    <strong class="text-truncate ms-2 text-dark font-monospace" style="max-width: 170px;" title="<?= esc($currentApiUrl) ?>">
+                        <?= esc($currentApiUrl ?: '-') ?>
+                    </strong>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-muted">Sesi WAHA:</span>
+                    <strong class="text-dark font-monospace"><i class="bi bi-person-check text-success me-1"></i><?= esc($currentSession ?: 'default') ?></strong>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span class="text-muted">Nomor Bot:</span>
-                    <strong class="text-dark">6285389705146</strong>
+                    <strong class="text-dark font-monospace"><?= esc($currentSender ?: '-') ?></strong>
                 </div>
             </div>
 
+            <!-- Action 1: Test Server Connection Ping -->
+            <form action="<?= site_url('admin/settings/test-whatsapp') ?>" method="POST" class="mb-3">
+                <?= csrf_field() ?>
+                <input type="hidden" name="test_phone" value="">
+                <button type="submit" class="btn btn-outline-success w-100 fw-bold py-2 rounded-3 small d-flex align-items-center justify-content-center gap-2">
+                    <i class="bi bi-arrow-repeat"></i> Cek Status Koneksi Sesi WAHA
+                </button>
+            </form>
+
             <hr class="my-3">
 
-            <!-- Test Send WhatsApp Message -->
+            <!-- Action 2: Test Send WhatsApp Message -->
             <h6 class="fw-bold text-dark mb-2 small"><i class="bi bi-send-check-fill text-primary me-1"></i> Uji Coba Kirim Pesan:</h6>
-            <p class="text-muted small mb-3">Kirimkan pesan instan untuk menguji bot WhatsApp.</p>
+            <p class="text-muted small mb-3">Kirimkan pesan instan ke nomor WhatsApp pribadi untuk menguji pengiriman.</p>
 
             <form action="<?= site_url('admin/settings/test-whatsapp') ?>" method="POST">
                 <?= csrf_field() ?>

@@ -59,12 +59,15 @@ class SettingController extends BaseController
      */
     public function testWhatsApp()
     {
-        $targetPhone = trim($this->request->getPost('test_phone'));
+        $targetPhone = trim((string)$this->request->getPost('test_phone'));
         $testMsg     = "Tes koneksi WhatsApp Gateway SI VERONIKA Pengadilan Agama Penajam berhasil pada " . date('d/m/Y H:i:s') . ' WITA.';
 
         if (empty($targetPhone)) {
             $connRes = $this->waService->testConnection();
-            return redirect()->back()->with('message', $connRes['message']);
+            if (!empty($connRes['success'])) {
+                return redirect()->back()->with('message', $connRes['message']);
+            }
+            return redirect()->back()->with('error', "Koneksi Gateway Gagal: " . ($connRes['message'] ?? 'Tidak dapat terhubung ke server.'));
         }
 
         $res = $this->waService->send($targetPhone, $testMsg, 'wa_test', null, 'test_' . time());
