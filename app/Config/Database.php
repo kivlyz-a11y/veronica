@@ -194,6 +194,26 @@ class Database extends Config
     {
         parent::__construct();
 
+        // Dukungan variabel environment dengan format DB_HOST, DB_NAME, DB_USER, dll
+        if ($host = env('DB_HOST')) {
+            $this->default['hostname'] = $host;
+        }
+        if ($db = env('DB_NAME')) {
+            $this->default['database'] = $db;
+        }
+        if ($user = env('DB_USER')) {
+            $this->default['username'] = $user;
+        }
+        if ($pass = env('DB_PASS')) {
+            $this->default['password'] = $pass;
+        }
+        if ($port = env('DB_PORT')) {
+            $this->default['port'] = (int) $port;
+        }
+        if ($driver = env('DB_DRIVER')) {
+            $this->default['DBDriver'] = $driver;
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.

@@ -16,8 +16,8 @@ mkdir -p /var/www/html/writable/cache \
 chown -R www-data:www-data /var/www/html/writable 2>/dev/null || true
 chmod -R 775 /var/www/html/writable 2>/dev/null || true
 
-# Jika AUTO_MIGRATE diaktifkan di environment variable, jalankan migrasi database otomatis
-if [ "$AUTO_MIGRATE" = "true" ] || [ "$AUTO_MIGRATE" = "1" ]; then
+# Jika AUTO_MIGRATE atau DB_AUTO_MIGRATE diaktifkan, jalankan migrasi database otomatis
+if [ "$AUTO_MIGRATE" = "true" ] || [ "$AUTO_MIGRATE" = "1" ] || [ "$DB_AUTO_MIGRATE" = "true" ] || [ "$DB_AUTO_MIGRATE" = "1" ]; then
     echo "[SI VERONIKA] Menjalankan migrasi database otomatis..."
     php /var/www/html/spark migrate --force || true
 fi
