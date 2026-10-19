@@ -30,7 +30,7 @@ class ServiceController extends BaseController
         }
 
         $data = [
-            'title'    => 'Manajemen Jenis Layanan - SI VERONIKA',
+            'title'    => 'Manajemen Jenis Layanan - SI VERONICA',
             'services' => $services,
         ];
 

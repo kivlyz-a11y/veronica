@@ -8,7 +8,7 @@
         <div class="d-flex align-items-center gap-2 mb-1">
             <h3 class="fw-extrabold text-dark mb-0">Pengaturan Sistem</h3>
             <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1 rounded-pill small fw-semibold">
-                <i class="bi bi-shield-check me-1"></i> SI VERONIKA
+                <i class="bi bi-shield-check me-1"></i> SI VERONICA
             </span>
         </div>
         <p class="text-muted small mb-0">Kelola identitas Pengadilan Agama Penajam, kustomisasi template pesan WhatsApp, dan jadwal pengiriman otomatis.</p>
@@ -254,7 +254,7 @@
                         <div class="row g-3 small">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Nama Singkat Aplikasi <span class="text-danger">*</span></label>
-                                <input type="text" name="app_name" class="form-control" value="<?= esc($settings['app_name'] ?? 'SI VERONIKA') ?>" required>
+                                <input type="text" name="app_name" class="form-control" value="<?= esc($settings['app_name'] ?? 'SI VERONICA') ?>" required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold text-dark">Nama Panjang Aplikasi</label>
@@ -358,7 +358,7 @@
                         <div class="alert alert-info d-flex align-items-start gap-3 rounded-4 p-3 mb-4">
                             <i class="bi bi-info-circle-fill fs-3 text-info"></i>
                             <div>
-                                <h6 class="fw-bold mb-1">Bagaimana Cara Kerja Otomasi SI VERONIKA?</h6>
+                                <h6 class="fw-bold mb-1">Bagaimana Cara Kerja Otomasi SI VERONICA?</h6>
                                 <p class="small mb-0">
                                     Sistem menggunakan CodeIgniter Spark CLI commands untuk mengecek jadwal pemohon secara periodik. Scheduler akan mengecek siapa saja yang memiliki jadwal esok hari (H-1), satu jam lagi (H-1h), dan mengirimkan tautan Zoom tepat <?= esc($settings['zoom_reminder_offset_minutes'] ?? '10') ?> menit sebelum jadwal dimulai.
                                 </p>
@@ -367,17 +367,17 @@
 
                         <h6 class="fw-bold text-dark small mb-2">1. Command Pengingat & Pengiriman Link Zoom Otomatis:</h6>
                         <div class="p-3 bg-dark text-light rounded-3 font-monospace small mb-3 position-relative">
-                            <code>* * * * * cd <?= FCPATH ?>.. && php spark veronika:send-reminders >> writable/logs/reminder.log 2>&1</code>
+                            <code>* * * * * cd <?= FCPATH ?>.. && php spark veronica:send-reminders >> writable/logs/reminder.log 2>&1</code>
                         </div>
 
                         <h6 class="fw-bold text-dark small mb-2">2. Command Retry Worker Notifikasi Tertunda:</h6>
                         <div class="p-3 bg-dark text-light rounded-3 font-monospace small mb-3 position-relative">
-                            <code>*/5 * * * * cd <?= FCPATH ?>.. && php spark veronika:process-notifications >> writable/logs/worker.log 2>&1</code>
+                            <code>*/5 * * * * cd <?= FCPATH ?>.. && php spark veronica:process-notifications >> writable/logs/worker.log 2>&1</code>
                         </div>
 
                         <h6 class="fw-bold text-dark small mb-2">3. Command Pembersihan File Cache Lama:</h6>
                         <div class="p-3 bg-dark text-light rounded-3 font-monospace small mb-3 position-relative">
-                            <code>0 0 * * * cd <?= FCPATH ?>.. && php spark veronika:cleanup-files >> writable/logs/cleanup.log 2>&1</code>
+                            <code>0 0 * * * cd <?= FCPATH ?>.. && php spark veronica:cleanup-files >> writable/logs/cleanup.log 2>&1</code>
                         </div>
                     </div>
                 </div>
@@ -460,7 +460,7 @@
         <div class="card card-panel p-4 border-0 shadow-sm bg-success text-white">
             <h6 class="fw-bold mb-2"><i class="bi bi-shield-check me-1"></i> Pengadilan Agama Penajam</h6>
             <p class="small mb-0 opacity-90">
-                Aplikasi SI VERONIKA dirancang dengan arsitektur tangguh, menjaga privasi data pencari keadilan dan mempermudah layanan konsultasi online melalui Zoom.
+                Aplikasi SI VERONICA dirancang dengan arsitektur tangguh, menjaga privasi data pencari keadilan dan mempermudah layanan konsultasi online melalui Zoom.
             </p>
         </div>
     </div>

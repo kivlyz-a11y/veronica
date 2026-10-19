@@ -1,7 +1,7 @@
-# DOKUMENTASI LENGKAP PENGEMBANGAN & PANDUAN SI VERONIKA
+# DOKUMENTASI LENGKAP PENGEMBANGAN & PANDUAN SI VERONICA
 ## Pengadilan Agama Penajam
 
-Dokumen ini berisi rangkuman lengkap seluruh percakapan, arsitektur, panduan instalasi, kredensial login, dan petunjuk operasional aplikasi **SI VERONIKA (Sistem Verifikasi Online CEKAdministrasi)**.
+Dokumen ini berisi rangkuman lengkap seluruh percakapan, arsitektur, panduan instalasi, kredensial login, dan petunjuk operasional aplikasi **SI VERONICA (Sistem Verifikasi Online CEKAdministrasi)**.
 
 ---
 
@@ -58,18 +58,18 @@ File konfigurasi berada di: `c:\xampp\htdocs\veronica\.env`
 Jalankan perintah ini di terminal:
 ```bash
 # Pengecekan dan pengiriman pengingat otomatis (H-1, H-1h, Link Zoom):
-php spark veronika:send-reminders
+php spark veronica:send-reminders
 
 # Pemrosesan antrean pesan WhatsApp yang tertunda:
-php spark veronika:process-notifications
+php spark veronica:process-notifications
 
 # Pembersihan file temporary / cache lama:
-php spark veronika:cleanup-files
+php spark veronica:cleanup-files
 ```
 
 **Setup Cron Job di Server Linux / cPanel (Setiap Menit):**
 ```bash
-* * * * * cd /xampp/htdocs/veronica && php spark veronika:send-reminders >> writable/logs/reminder.log 2>&1
+* * * * * cd /xampp/htdocs/veronica && php spark veronica:send-reminders >> writable/logs/reminder.log 2>&1
 ```
 
 ---
@@ -90,4 +90,4 @@ php spark veronika:cleanup-files
 * **Pelayanan & Check-In QR Scanner**: `http://localhost:8080/officer/checkin`
 
 ---
-*Dokumen ini dibuat otomatis sebagai arsip permanen percakapan dan panduan aplikasi SI VERONIKA.*
+*Dokumen ini dibuat otomatis sebagai arsip permanen percakapan dan panduan aplikasi SI VERONICA.*

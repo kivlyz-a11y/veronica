@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'Login Petugas - SI VERONIKA') ?></title>
+    <title><?= esc($title ?? 'Login Petugas - SI VERONICA') ?></title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +58,7 @@
             <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: #0a5c36; color: #fff; font-size: 1.8rem; border: 3px solid #d4af37;">
                 <i class="bi bi-bank"></i>
             </div>
-            <h4 class="fw-extrabold text-dark mb-1">SI VERONIKA</h4>
+            <h4 class="fw-extrabold text-dark mb-1">SI VERONICA</h4>
             <div class="text-muted small">Portal Petugas Pengadilan Agama Penajam</div>
         </div>
 

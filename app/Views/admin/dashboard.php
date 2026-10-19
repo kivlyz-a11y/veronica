@@ -5,7 +5,7 @@
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
     <div>
         <h3 class="fw-bold text-dark mb-1">Dashboard Pelayanan Online</h3>
-        <p class="text-muted small mb-0">Selamat datang di Panel Administrasi SI VERONIKA Pengadilan Agama Penajam.</p>
+        <p class="text-muted small mb-0">Selamat datang di Panel Administrasi SI VERONICA Pengadilan Agama Penajam.</p>
     </div>
     <div class="d-flex gap-2">
         <a href="<?= site_url('officer/checkin') ?>" class="btn btn-success fw-semibold px-3 py-2 rounded-3 shadow-sm d-flex align-items-center gap-2">

@@ -27,7 +27,7 @@ class SettingController extends BaseController
         $settings = $this->settingModel->getAllAsMap();
 
         $data = [
-            'title'    => 'Pengaturan Sistem & WhatsApp Gateway - SI VERONIKA',
+            'title'    => 'Pengaturan Sistem & WhatsApp Gateway - SI VERONICA',
             'settings' => $settings,
         ];
 
@@ -60,7 +60,7 @@ class SettingController extends BaseController
     public function testWhatsApp()
     {
         $targetPhone = trim((string)$this->request->getPost('test_phone'));
-        $testMsg     = "Tes koneksi WhatsApp Gateway SI VERONIKA Pengadilan Agama Penajam berhasil pada " . date('d/m/Y H:i:s') . ' WITA.';
+        $testMsg     = "Tes koneksi WhatsApp Gateway SI VERONICA Pengadilan Agama Penajam berhasil pada " . date('d/m/Y H:i:s') . ' WITA.';
 
         if (empty($targetPhone)) {
             $connRes = $this->waService->testConnection();

@@ -129,7 +129,7 @@ class ReportService
 
         // Header Title
         $sheet->setCellValue('A1', 'PENGADILAN AGAMA PENAJAM');
-        $sheet->setCellValue('A2', 'LAPORAN REKAPITULASI PELAYANAN ONLINE SI VERONIKA');
+        $sheet->setCellValue('A2', 'LAPORAN REKAPITULASI PELAYANAN ONLINE SI VERONICA');
         $dateInfo = 'Periode: ' . (!empty($reportData['filters']['date_from']) ? $reportData['filters']['date_from'] : 'Semua') . ' s/d ' . (!empty($reportData['filters']['date_to']) ? $reportData['filters']['date_to'] : 'Semua');
         $sheet->setCellValue('A3', $dateInfo);
 

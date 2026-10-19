@@ -43,7 +43,7 @@ class ApplicationTest extends CIUnitTestCase
     public function testMockWhatsAppProvider()
     {
         $mock = new MockWhatsAppProvider();
-        $res = $mock->sendMessage('081234567890', 'Pesan Uji Coba SI VERONIKA');
+        $res = $mock->sendMessage('081234567890', 'Pesan Uji Coba SI VERONICA');
 
         $this->assertTrue($res['success']);
     }

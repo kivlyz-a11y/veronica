@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'Dashboard - SI VERONIKA PA Penajam') ?></title>
+    <title><?= esc($title ?? 'Dashboard - SI VERONICA PA Penajam') ?></title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,6 +118,21 @@
             box-shadow: 0 4px 15px -2px rgba(0, 0, 0, 0.03);
         }
 
+        .btn-veronica-primary,
+        .btn-veronika-primary {
+            background: linear-gradient(135deg, #0a5c36 0%, #15803d 100%);
+            color: #ffffff;
+            border: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-veronica-primary:hover,
+        .btn-veronika-primary:hover {
+            background: linear-gradient(135deg, #074327 0%, #0a5c36 100%);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
         @media (max-width: 991.98px) {
             .admin-sidebar {
                 transform: translateX(-100%);
@@ -150,7 +165,7 @@
                 <i class="bi bi-bank"></i>
             </div>
             <div>
-                <div class="fw-bold text-white fs-6">SI VERONIKA</div>
+                <div class="fw-bold text-white fs-6">SI VERONICA</div>
                 <div style="font-size: 0.72rem; color: #94a3b8;">PA Penajam Panel</div>
             </div>
         </div>
@@ -294,7 +309,7 @@
         </main>
 
         <footer class="bg-white border-top py-3 px-4 text-center text-md-start small text-muted d-flex flex-column flex-md-row justify-content-between">
-            <div>&copy; <?= date('Y') ?> <strong>SI VERONIKA</strong> - Pengadilan Agama Penajam</div>
+            <div>&copy; <?= date('Y') ?> <strong>SI VERONICA</strong> - Pengadilan Agama Penajam</div>
             <div class="mt-1 mt-md-0">Sistem Verifikasi Online CEKAdministrasi</div>
         </footer>
     </div>

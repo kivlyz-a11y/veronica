@@ -34,7 +34,7 @@ class NotificationService
 
         $template = $this->settingModel->getVal(
             'wa_template_registration',
-            "Pendaftaran SI VERONIKA Pengadilan Agama Penajam berhasil.\n\nNomor Registrasi: {{nomor_registrasi}}\nNama: {{nama}}\nLayanan: {{layanan}}\nTanggal: {{tanggal}}\nWaktu: {{waktu}} WITA\n\nStatus permohonan Anda: Menunggu Verifikasi.\n\nMohon menunggu informasi selanjutnya.\n\nPengadilan Agama Penajam."
+            "Pendaftaran SI VERONICA Pengadilan Agama Penajam berhasil.\n\nNomor Registrasi: {{nomor_registrasi}}\nNama: {{nama}}\nLayanan: {{layanan}}\nTanggal: {{tanggal}}\nWaktu: {{waktu}} WITA\n\nStatus permohonan Anda: Menunggu Verifikasi.\n\nMohon menunggu informasi selanjutnya.\n\nPengadilan Agama Penajam."
         );
 
         $dateFormatted = date('d F Y', strtotime($app['schedule_date']));
@@ -72,7 +72,7 @@ class NotificationService
 
         $template = $this->settingModel->getVal(
             'wa_template_status_update',
-            "Pemberitahuan Status SI VERONIKA Pengadilan Agama Penajam:\n\nNomor Registrasi: {{nomor_registrasi}}\nNama: {{nama}}\nStatus: {{status}}\nCatatan Petugas: {{catatan}}\n\nSilakan cek status Anda melalui tautan:\n{{url_cek_status}}\n\nPengadilan Agama Penajam."
+            "Pemberitahuan Status SI VERONICA Pengadilan Agama Penajam:\n\nNomor Registrasi: {{nomor_registrasi}}\nNama: {{nama}}\nStatus: {{status}}\nCatatan Petugas: {{catatan}}\n\nSilakan cek status Anda melalui tautan:\n{{url_cek_status}}\n\nPengadilan Agama Penajam."
         );
 
         $message = $this->waService->renderTemplate($template, [
@@ -115,7 +115,7 @@ class NotificationService
 
         $template = $this->settingModel->getVal(
             'wa_template_zoom_link',
-            "SI VERONIKA Pengadilan Agama Penajam\n\nLayanan Anda akan segera dimulai.\n\nNomor Registrasi: {{nomor_registrasi}}\nLayanan: {{layanan}}\nTanggal: {{tanggal}}\nWaktu: {{waktu}} WITA\n\nSilakan bergabung melalui Zoom:\n\n{{link_zoom}}\n\nMeeting ID: {{zoom_meeting_id}}\nPasscode: {{zoom_password}}\n\nMohon bergabung beberapa menit sebelum jadwal pelayanan.\n\nPengadilan Agama Penajam."
+            "SI VERONICA Pengadilan Agama Penajam\n\nLayanan Anda akan segera dimulai.\n\nNomor Registrasi: {{nomor_registrasi}}\nLayanan: {{layanan}}\nTanggal: {{tanggal}}\nWaktu: {{waktu}} WITA\n\nSilakan bergabung melalui Zoom:\n\n{{link_zoom}}\n\nMeeting ID: {{zoom_meeting_id}}\nPasscode: {{zoom_password}}\n\nMohon bergabung beberapa menit sebelum jadwal pelayanan.\n\nPengadilan Agama Penajam."
         );
 
         $dateFormatted = date('d F Y', strtotime($app['schedule_date']));
@@ -155,7 +155,7 @@ class NotificationService
 
         $template = $this->settingModel->getVal(
             'wa_template_reminder_h1',
-            "Pengingat dari SI VERONIKA Pengadilan Agama Penajam:\n\nHalo Bapak/Ibu {{nama}}, Anda memiliki jadwal layanan online besok pada {{tanggal}} pukul {{waktu}} WITA.\nLayanan: {{layanan}}\nNomor Registrasi: {{nomor_registrasi}}\n\nMohon persiapkan dokumen administrasi Anda.\n\nPengadilan Agama Penajam."
+            "Pengingat dari SI VERONICA Pengadilan Agama Penajam:\n\nHalo Bapak/Ibu {{nama}}, Anda memiliki jadwal layanan online besok pada {{tanggal}} pukul {{waktu}} WITA.\nLayanan: {{layanan}}\nNomor Registrasi: {{nomor_registrasi}}\n\nMohon persiapkan dokumen administrasi Anda.\n\nPengadilan Agama Penajam."
         );
 
         $dateFormatted = date('d F Y', strtotime($app['schedule_date']));
@@ -192,7 +192,7 @@ class NotificationService
 
         $template = $this->settingModel->getVal(
             'wa_template_reminder_h1h',
-            "Pengingat dari SI VERONIKA Pengadilan Agama Penajam:\n\nHalo Bapak/Ibu {{nama}}, jadwal layanan Anda akan dimulai 1 jam lagi (pukul {{waktu}} WITA).\nNomor Registrasi: {{nomor_registrasi}}\n\nLink Zoom akan dikirimkan menjelang jadwal pelayanan.\n\nPengadilan Agama Penajam."
+            "Pengingat dari SI VERONICA Pengadilan Agama Penajam:\n\nHalo Bapak/Ibu {{nama}}, jadwal layanan Anda akan dimulai 1 jam lagi (pukul {{waktu}} WITA).\nNomor Registrasi: {{nomor_registrasi}}\n\nLink Zoom akan dikirimkan menjelang jadwal pelayanan.\n\nPengadilan Agama Penajam."
         );
 
         $timeFormatted = substr($app['schedule_start_time'], 0, 5) . '–' . substr($app['schedule_end_time'], 0, 5);

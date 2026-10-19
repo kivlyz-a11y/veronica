@@ -24,7 +24,7 @@ class UserController extends BaseController
         $users = $this->userModel->orderBy('id', 'ASC')->findAll();
 
         $data = [
-            'title' => 'Manajemen Pengguna & Petugas - SI VERONIKA',
+            'title' => 'Manajemen Pengguna & Petugas - SI VERONICA',
             'users' => $users,
         ];
 

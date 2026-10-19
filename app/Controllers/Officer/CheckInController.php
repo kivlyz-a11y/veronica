@@ -52,7 +52,7 @@ class CheckInController extends BaseController
             ->getResultArray();
 
         $data = [
-            'title'      => 'Pelayanan & Check-In Online - SI VERONIKA',
+            'title'      => 'Pelayanan & Check-In Online - SI VERONICA',
             'todayQueue' => $todayQueue,
         ];
 

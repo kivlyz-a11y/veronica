@@ -25,7 +25,7 @@ class AuthController extends BaseController
             return redirect()->to(site_url('admin/dashboard'));
         }
 
-        return view('auth/login', ['title' => 'Login Petugas - SI VERONIKA']);
+        return view('auth/login', ['title' => 'Login Petugas - SI VERONICA']);
     }
 
     public function processLogin()

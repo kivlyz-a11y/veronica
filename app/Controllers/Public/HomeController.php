@@ -20,7 +20,7 @@ class HomeController extends BaseController
         }
 
         $data = [
-            'title'    => 'SI VERONIKA - Pengadilan Agama Penajam',
+            'title'    => 'SI VERONICA - Pengadilan Agama Penajam',
             'services' => $services,
         ];
 

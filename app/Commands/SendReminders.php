@@ -11,13 +11,13 @@ use CodeIgniter\CLI\CLI;
 
 class SendReminders extends BaseCommand
 {
-    protected $group       = 'Veronika';
-    protected $name        = 'veronika:send-reminders';
+    protected $group       = 'Veronica';
+    protected $name        = 'veronica:send-reminders';
     protected $description = 'Proses otomatis pengiriman pengingat jadwal (H-1, H-1 Jam) dan Link Zoom via WhatsApp.';
 
     public function run(array $params)
     {
-        CLI::write('[SI VERONIKA Scheduler] Memulai proses pengecekan pengingat...', 'green');
+        CLI::write('[SI VERONICA Scheduler] Memulai proses pengecekan pengingat...', 'green');
 
         $db                  = \Config\Database::connect();
         $notifService        = new NotificationService();
@@ -99,6 +99,6 @@ class SendReminders extends BaseCommand
             }
         }
 
-        CLI::write("[SI VERONIKA Scheduler] Selesai. (H-1: {$h1Sent}, H-1h: {$h1hSent}, Zoom: {$zoomSent})", 'green');
+        CLI::write("[SI VERONICA Scheduler] Selesai. (H-1: {$h1Sent}, H-1h: {$h1hSent}, Zoom: {$zoomSent})", 'green');
     }
 }

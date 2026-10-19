@@ -1,6 +1,6 @@
-# 🚀 Panduan Hosting SI VERONIKA di Coolify
+# 🚀 Panduan Hosting SI VERONICA di Coolify
 
-Panduan ini berisi langkah demi langkah untuk melakukan deploy aplikasi **SI VERONIKA (Pengadilan Agama Penajam)** ke server VPS menggunakan **Coolify**.
+Panduan ini berisi langkah demi langkah untuk melakukan deploy aplikasi **SI VERONICA (Pengadilan Agama Penajam)** ke server VPS menggunakan **Coolify**.
 
 ---
 
@@ -45,7 +45,7 @@ git push origin main
 ### Langkah 3: Buat Application di Coolify
 1. Di project yang sama, klik **+ New Resource** -> pilih **Application**.
 2. Pilih **Public Repository** atau **Private Repository (GitHub App)**.
-3. Masukkan URL repository SI VERONIKA Anda.
+3. Masukkan URL repository SI VERONICA Anda.
 4. Pada pilihan **Build Pack**, Coolify akan otomatis mendeteksi **Dockerfile**.
 5. Di bagian **Ports Exposes**, masukkan:
    ```
@@ -117,7 +117,7 @@ Jika Anda ingin aplikasi dan database MariaDB berjalan dalam satu kesatuan konfi
 
 ## ⏰ Pengaturan Scheduled Task / Cron Job (Pembersihan Cache Otomatis)
 
-SI VERONIKA memiliki command bawaan untuk membersihkan file ekspor/cache temporary yang sudah berumur > 24 jam.
+SI VERONICA memiliki command bawaan untuk membersihkan file ekspor/cache temporary yang sudah berumur > 24 jam.
 
 Untuk menjalankannya otomatis setiap malam di Coolify:
 1. Buka aplikasi Anda di Coolify -> menu **Scheduled Tasks** / **Cron Jobs**.

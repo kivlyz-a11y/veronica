@@ -53,7 +53,7 @@
         <const name="PUBLICPATH" value="./public/"/>
         <!-- Database configuration -->
         <env name="database.tests.hostname" value="localhost"/>
-        <env name="database.tests.database" value="si_veronika"/>
+        <env name="database.tests.database" value="test"/>
         <env name="database.tests.username" value="root"/>
         <env name="database.tests.password" value=""/>
         <env name="database.tests.DBDriver" value="MySQLi"/>

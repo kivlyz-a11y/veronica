@@ -14,7 +14,7 @@
                     <span>Pelayanan Terpadu Satu Pintu (PTSP) Online PA Penajam</span>
                 </div>
                 <h1 class="display-4 fw-extrabold mb-3" style="letter-spacing: -0.5px; line-height: 1.15;">
-                    SI VERONIKA
+                    SI VERONICA
                 </h1>
                 <h2 class="h4 fw-semibold text-warning mb-3">
                     Sistem Verifikasi Online CEKAdministrasi
@@ -128,7 +128,7 @@
             <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-2 rounded-pill fw-semibold mb-2">
                 ALUR MUDAH & CEPAT
             </span>
-            <h2 class="fw-bold text-dark">Cara Menggunakan SI VERONIKA</h2>
+            <h2 class="fw-bold text-dark">Cara Menggunakan SI VERONICA</h2>
             <p class="text-muted">Ikuti 6 langkah mudah berikut untuk mendapatkan layanan online via Zoom</p>
         </div>
 

@@ -33,7 +33,7 @@ class ScheduleController extends BaseController
         $holidays = $this->holidayModel->orderBy('holiday_date', 'ASC')->findAll();
 
         $data = [
-            'title'      => 'Manajemen Jadwal & Slot Pelayanan - SI VERONIKA',
+            'title'      => 'Manajemen Jadwal & Slot Pelayanan - SI VERONICA',
             'dateFilter' => $dateFilter,
             'slots'      => $slots,
             'officers'   => $officers,

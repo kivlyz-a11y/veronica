@@ -33,7 +33,7 @@ class StatusController extends BaseController
         }
 
         $data = [
-            'title'       => 'Cek Status Permohonan - SI VERONIKA',
+            'title'       => 'Cek Status Permohonan - SI VERONICA',
             'application' => $application,
             'searched'    => $searched,
             'regNum'      => $regNum,

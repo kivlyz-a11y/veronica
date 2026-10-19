@@ -5,7 +5,7 @@
 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
     <div>
         <h3 class="fw-bold text-dark mb-1">Laporan & Rekapitulasi Pelayanan</h3>
-        <p class="text-muted small mb-0">Statistik dan data pelayanan SI VERONIKA Pengadilan Agama Penajam.</p>
+        <p class="text-muted small mb-0">Statistik dan data pelayanan SI VERONICA Pengadilan Agama Penajam.</p>
     </div>
     <div class="d-flex gap-2">
         <a href="<?= site_url('admin/reports/excel?' . http_build_query($filters)) ?>" class="btn btn-success fw-semibold px-3 py-2 rounded-3 shadow-sm">

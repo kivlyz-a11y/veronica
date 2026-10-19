@@ -21,7 +21,7 @@ class AuditLogController extends BaseController
         $logs = $this->auditLogModel->getLogs(100);
 
         $data = [
-            'title' => 'Riwayat Log Aktivitas (Audit Trail) - SI VERONIKA',
+            'title' => 'Riwayat Log Aktivitas (Audit Trail) - SI VERONICA',
             'logs'  => $logs,
         ];
 

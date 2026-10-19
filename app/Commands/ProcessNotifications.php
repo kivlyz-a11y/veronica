@@ -9,13 +9,13 @@ use CodeIgniter\CLI\CLI;
 
 class ProcessNotifications extends BaseCommand
 {
-    protected $group       = 'Veronika';
-    protected $name        = 'veronika:process-notifications';
+    protected $group       = 'Veronica';
+    protected $name        = 'veronica:process-notifications';
     protected $description = 'Memproses dan mencoba ulang pengiriman notifikasi WhatsApp yang tertunda (pending) atau gagal.';
 
     public function run(array $params)
     {
-        CLI::write('[SI VERONIKA] Memproses notifikasi WhatsApp yang tertunda...', 'green');
+        CLI::write('[SI VERONICA] Memproses notifikasi WhatsApp yang tertunda...', 'green');
 
         $notifModel = new NotificationModel();
         $waService  = new WhatsAppService();
@@ -50,6 +50,6 @@ class ProcessNotifications extends BaseCommand
             }
         }
 
-        CLI::write("[SI VERONIKA] Selesai memproses {$processed}/" . count($pending) . ' notifikasi.', 'green');
+        CLI::write("[SI VERONICA] Selesai memproses {$processed}/" . count($pending) . ' notifikasi.', 'green');
     }
 }

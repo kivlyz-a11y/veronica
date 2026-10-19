@@ -48,7 +48,7 @@ class ApplicationController extends BaseController
         $services  = $this->serviceModel->findAll();
 
         $data = [
-            'title'        => 'Manajemen Permohonan Layanan - SI VERONIKA',
+            'title'        => 'Manajemen Permohonan Layanan - SI VERONICA',
             'applications' => $paginated['data'],
             'pager'        => $paginated['pager'],
             'services'     => $services,
@@ -75,7 +75,7 @@ class ApplicationController extends BaseController
                                              ->findAll();
 
         $data = [
-            'title'         => "Detail Permohonan #{$app['registration_number']} - SI VERONIKA",
+            'title'         => "Detail Permohonan #{$app['registration_number']} - SI VERONICA",
             'app'           => $app,
             'documents'     => $documents,
             'notifications' => $notifications,

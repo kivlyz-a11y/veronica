@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Rekapitulasi Pelayanan - SI VERONIKA</title>
+    <title>Laporan Rekapitulasi Pelayanan - SI VERONICA</title>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -77,7 +77,7 @@
 
     <div class="header">
         <h2>PENGADILAN AGAMA PENAJAM</h2>
-        <h3>LAPORAN REKAPITULASI PELAYANAN ONLINE SI VERONIKA</h3>
+        <h3>LAPORAN REKAPITULASI PELAYANAN ONLINE SI VERONICA</h3>
         <p><?= esc(get_setting('institution_address', 'Jl. Provinsi Km. 09, Penajam')) ?> | Telp: <?= esc(get_setting('institution_phone', '(0542) 7212345')) ?></p>
     </div>
 

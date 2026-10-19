@@ -32,7 +32,7 @@ class ReportController extends BaseController
         $services   = $this->serviceModel->findAll();
 
         $data = [
-            'title'      => 'Laporan & Rekapitulasi Pelayanan - SI VERONIKA',
+            'title'      => 'Laporan & Rekapitulasi Pelayanan - SI VERONICA',
             'reportData' => $reportData,
             'services'   => $services,
             'filters'    => $filters,

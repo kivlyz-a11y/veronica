@@ -28,7 +28,7 @@ class VerifyController extends BaseController
         // Otherwise show public status
         $detailed = $appModel->getDetailed($app['id']);
         $data = [
-            'title'       => 'Verifikasi Tiket Pelayanan - SI VERONIKA',
+            'title'       => 'Verifikasi Tiket Pelayanan - SI VERONICA',
             'application' => $detailed,
             'searched'    => true,
             'regNum'      => $regNum,

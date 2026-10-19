@@ -7,16 +7,16 @@ use CodeIgniter\CLI\CLI;
 
 class CleanupFiles extends BaseCommand
 {
-    protected $group       = 'Veronika';
-    protected $name        = 'veronika:cleanup-files';
+    protected $group       = 'Veronica';
+    protected $name        = 'veronica:cleanup-files';
     protected $description = 'Membersihkan file temporary/cache ekspor laporan yang sudah lama.';
 
     public function run(array $params)
     {
-        CLI::write('[SI VERONIKA] Membersihkan file cache dan ekspor lama...', 'green');
+        CLI::write('[SI VERONICA] Membersihkan file cache dan ekspor lama...', 'green');
 
         $cacheDir = WRITEPATH . 'cache/';
-        $files = glob($cacheDir . 'laporan_veronika_*');
+        $files = glob($cacheDir . 'laporan_veroni*_*');
         $deleted = 0;
 
         $oneDayAgo = time() - 86400; // 24 hours
@@ -28,6 +28,6 @@ class CleanupFiles extends BaseCommand
             }
         }
 
-        CLI::write("[SI VERONIKA] Selesai. {$deleted} file sementara dihapus.", 'green');
+        CLI::write("[SI VERONICA] Selesai. {$deleted} file sementara dihapus.", 'green');
     }
 }

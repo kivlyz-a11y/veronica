@@ -46,7 +46,7 @@ class ApplicationController extends BaseController
         }
 
         $data = [
-            'title'           => 'Ajukan Permintaan Layanan - SI VERONIKA',
+            'title'           => 'Ajukan Permintaan Layanan - SI VERONICA',
             'services'        => $services,
             'selectedService' => $selectedService,
         ];
@@ -169,7 +169,7 @@ class ApplicationController extends BaseController
         $qrCodeSvg = generate_qr_data_uri($verifyUrl);
 
         $data = [
-            'title'       => 'Pendaftaran Berhasil - SI VERONIKA',
+            'title'       => 'Pendaftaran Berhasil - SI VERONICA',
             'application' => $detailed,
             'qrCodeSvg'   => $qrCodeSvg,
             'verifyUrl'   => $verifyUrl,

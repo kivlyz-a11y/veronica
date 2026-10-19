@@ -84,7 +84,7 @@ class DashboardController extends BaseController
             ->getResultArray();
 
         $data = [
-            'title'          => 'Dashboard Utama - SI VERONIKA',
+            'title'          => 'Dashboard Utama - SI VERONICA',
             'stats'          => $stats,
             'todaySchedules' => $todaySchedules,
             'chartDates'     => json_encode($chartDates),

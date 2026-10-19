@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'SI VERONIKA - Pengadilan Agama Penajam') ?></title>
+    <title><?= esc($title ?? 'SI VERONICA - Pengadilan Agama Penajam') ?></title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,6 +46,7 @@
         }
 
         /* Navbar */
+        .navbar-veronica,
         .navbar-veronika {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
@@ -63,6 +64,7 @@
             letter-spacing: 0.5px;
         }
 
+        .btn-veronica-primary,
         .btn-veronika-primary {
             background: linear-gradient(135deg, var(--pa-primary) 0%, var(--pa-primary-light) 100%);
             color: #ffffff;
@@ -74,6 +76,7 @@
             transition: all 0.25s ease;
         }
 
+        .btn-veronica-primary:hover,
         .btn-veronika-primary:hover {
             background: linear-gradient(135deg, var(--pa-primary-dark) 0%, var(--pa-primary) 100%);
             color: #ffffff;
@@ -81,6 +84,7 @@
             box-shadow: 0 6px 16px rgba(10, 92, 54, 0.35);
         }
 
+        .btn-veronica-outline,
         .btn-veronika-outline {
             border: 2px solid var(--pa-primary);
             color: var(--pa-primary);
@@ -90,6 +94,7 @@
             transition: all 0.25s ease;
         }
 
+        .btn-veronica-outline:hover,
         .btn-veronika-outline:hover {
             background: var(--pa-primary);
             color: #ffffff;
@@ -162,7 +167,7 @@
                 </div>
                 <div>
                     <div class="d-flex align-items-center gap-2">
-                        <span class="fw-bold text-dark fs-5 tracking-tight">SI VERONIKA</span>
+                        <span class="fw-bold text-dark fs-5 tracking-tight">SI VERONICA</span>
                         <span class="brand-badge">PA PENAJAM</span>
                     </div>
                     <div class="text-muted" style="font-size: 0.72rem; line-height: 1;">Sistem Verifikasi Online CEKAdministrasi</div>
@@ -255,7 +260,7 @@
                             <i class="bi bi-bank"></i>
                         </div>
                         <div>
-                            <h5 class="text-white mb-0 fw-bold">SI VERONIKA</h5>
+                            <h5 class="text-white mb-0 fw-bold">SI VERONICA</h5>
                             <small class="text-muted">Pengadilan Agama Penajam</small>
                         </div>
                     </div>

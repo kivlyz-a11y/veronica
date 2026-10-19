@@ -107,7 +107,7 @@
 
     <div class="header">
         <h2>PENGADILAN AGAMA PENAJAM</h2>
-        <h3>SI VERONIKA (Sistem Verifikasi Online CEKAdministrasi)</h3>
+        <h3>SI VERONICA (Sistem Verifikasi Online CEKAdministrasi)</h3>
         <p><?= esc(get_setting('institution_address', 'Jl. Provinsi Km. 09, Nipah-Nipah, Penajam')) ?> | Telp: <?= esc(get_setting('institution_phone', '(0542) 7212345')) ?></p>
     </div>
 
