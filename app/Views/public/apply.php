@@ -149,7 +149,14 @@
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">Tanggal Pelayanan <span class="text-danger">*</span></label>
                             <input type="date" id="scheduleDateInput" class="form-control form-control-lg bg-light fw-bold" min="<?= date('Y-m-d') ?>" value="<?= date('Y-m-d') ?>" required>
-                            <small class="text-muted" style="font-size: 0.72rem;">Pelayanan buka Senin s/d Jumat (Kecuali Hari Libur).</small>
+                            <div class="d-flex flex-wrap gap-1 mt-2">
+                                <span class="text-muted w-100" style="font-size: 0.72rem;">Pilihan Cepat:</span>
+                                <button type="button" class="btn btn-xs btn-outline-success rounded-pill py-0 px-2 quick-date-btn active" data-date="<?= date('Y-m-d') ?>">Hari Ini</button>
+                                <button type="button" class="btn btn-xs btn-outline-success rounded-pill py-0 px-2 quick-date-btn" data-date="<?= date('Y-m-d', strtotime('+1 day')) ?>">Besok</button>
+                                <button type="button" class="btn btn-xs btn-outline-success rounded-pill py-0 px-2 quick-date-btn" data-date="<?= date('Y-m-d', strtotime('+2 days')) ?>">+2 Hari</button>
+                                <button type="button" class="btn btn-xs btn-outline-success rounded-pill py-0 px-2 quick-date-btn" data-date="<?= date('Y-m-d', strtotime('+7 days')) ?>">+1 Minggu</button>
+                            </div>
+                            <small class="text-muted d-block mt-1" style="font-size: 0.72rem;">Pelayanan buka Senin s/d Jumat (Kecuali Hari Libur).</small>
                         </div>
 
                         <!-- Slots Loader & Grid -->
@@ -319,7 +326,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    document.querySelectorAll('.quick-date-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.quick-date-btn').forEach(b => {
+                b.classList.remove('active', 'bg-success', 'text-white');
+            });
+            this.classList.add('active', 'bg-success', 'text-white');
+            dateInput.value = this.dataset.date;
+            loadSlots(this.dataset.date);
+        });
+    });
+
     dateInput.addEventListener('change', function() {
+        document.querySelectorAll('.quick-date-btn').forEach(b => {
+            if (b.dataset.date === this.value) {
+                b.classList.add('active', 'bg-success', 'text-white');
+            } else {
+                b.classList.remove('active', 'bg-success', 'text-white');
+            }
+        });
         loadSlots(this.value);
     });
 

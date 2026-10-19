@@ -29,7 +29,7 @@
     <div class="col-lg-8">
         <div class="card card-panel p-4 mb-4">
             <!-- Date Filter Picker & Navigation -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 mb-4 gap-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center border-bottom pb-3 mb-3 gap-3">
                 <div>
                     <h5 class="fw-bold text-dark mb-1">
                         <i class="bi bi-calendar-check text-success me-2"></i><?= format_indo_date($dateFilter) ?>
@@ -55,6 +55,33 @@
                 </div>
             </div>
 
+            <!-- Quick Date Strip (Upcoming dates with slots) -->
+            <?php if (!empty($upcomingDates)): ?>
+                <div class="mb-4 pb-2 border-bottom">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <span class="small fw-semibold text-muted">
+                            <i class="bi bi-calendar3-range me-1 text-success"></i> Tanggal Pelayanan Terdekat:
+                        </span>
+                        <span class="badge bg-light text-secondary border small" style="font-size: 0.72rem;">
+                            <?= count($upcomingDates) ?> Hari Terjadwal
+                        </span>
+                    </div>
+                    <div class="d-flex gap-2 overflow-auto pb-1" style="white-space: nowrap;">
+                        <?php foreach (array_slice($upcomingDates, 0, 10) as $ud): ?>
+                            <?php $isSelected = ($ud['date'] === $dateFilter); ?>
+                            <a href="<?= site_url('admin/schedules?date=' . $ud['date']) ?>" 
+                               class="btn btn-xs rounded-pill px-2 py-1 d-inline-flex align-items-center gap-1 <?= $isSelected ? 'btn-success text-white fw-bold shadow-sm' : 'btn-outline-secondary' ?>">
+                                <span><?= date('d M', strtotime($ud['date'])) ?></span>
+                                <span class="badge rounded-pill <?= $isSelected ? 'bg-white text-success' : 'bg-secondary' ?>"><?= $ud['slot_count'] ?></span>
+                            </a>
+                        <?php endforeach; ?>
+                        <?php if (count($upcomingDates) > 10): ?>
+                            <span class="text-muted small align-self-center ps-1" style="font-size: 0.75rem;">+<?= count($upcomingDates) - 10 ?> hari lainnya di panel kanan &rarr;</span>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <!-- Slots Table -->
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 small">
@@ -75,7 +102,14 @@
                                     <div class="mb-3 text-secondary opacity-50">
                                         <i class="bi bi-calendar2-x fs-1"></i>
                                     </div>
-                                    <p class="mb-2 fw-semibold">Belum ada slot pelayanan pada tanggal ini.</p>
+                                    <p class="mb-2 fw-semibold">Belum ada slot pelayanan pada <?= format_indo_date($dateFilter) ?>.</p>
+                                    <?php if (!empty($nearestDate)): ?>
+                                        <div class="alert alert-info py-2 px-3 d-inline-block small mb-3">
+                                            <i class="bi bi-info-circle me-1"></i> Jadwal terdekat berikutnya:
+                                            <strong><?= format_indo_date($nearestDate['date']) ?></strong> (<?= $nearestDate['slot_count'] ?> slot aktif).
+                                            <a href="<?= site_url('admin/schedules?date=' . $nearestDate['date']) ?>" class="btn btn-xs btn-primary ms-2 py-0 px-2">Buka Tanggal Ini</a>
+                                        </div>
+                                    <?php endif; ?>
                                     <div class="d-flex justify-content-center gap-2">
                                         <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#recurringSlotModal">
                                             <i class="bi bi-arrow-repeat me-1"></i> Buat Berulang (Senin - Jumat)
@@ -133,8 +167,56 @@
         </div>
     </div>
 
-    <!-- Right: Holiday List Card -->
+    <!-- Right: Upcoming Scheduled Workdays & Holiday List -->
     <div class="col-lg-4">
+        <!-- Upcoming Configured Dates Panel -->
+        <div class="card card-panel p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="fw-bold text-dark mb-0">
+                    <i class="bi bi-calendar3 text-success me-2"></i> Jadwal Aktif Sistem
+                </h5>
+                <span class="badge bg-success-subtle text-success border border-success-subtle small">
+                    <?= count($upcomingDates ?? []) ?> Hari
+                </span>
+            </div>
+            <p class="text-muted small mb-3" style="font-size: 0.8rem;">
+                Daftar tanggal yang memiliki slot pelayanan. Klik tanggal untuk langsung memeriksa slotnya:
+            </p>
+
+            <div class="list-group list-group-flush border rounded-3 overflow-auto" style="max-height: 280px;">
+                <?php if (empty($upcomingDates)): ?>
+                    <div class="text-center py-4 text-muted small">
+                        <i class="bi bi-calendar-x fs-4 d-block mb-1 opacity-50"></i>
+                        Belum ada jadwal yang dibuat untuk hari ini ke depan.
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($upcomingDates as $ud): ?>
+                        <?php $isCurrent = ($ud['date'] === $dateFilter); ?>
+                        <a href="<?= site_url('admin/schedules?date=' . $ud['date']) ?>" 
+                           class="list-group-item list-group-item-action py-2 px-3 d-flex justify-content-between align-items-center <?= $isCurrent ? 'bg-success-subtle border-start border-4 border-success fw-bold' : '' ?>">
+                            <div>
+                                <div class="<?= $isCurrent ? 'text-success' : 'text-dark' ?>">
+                                    <i class="bi bi-calendar-check me-1"></i>
+                                    <?= format_indo_date($ud['date']) ?>
+                                </div>
+                                <small class="text-muted" style="font-size: 0.72rem;">
+                                    <?= date('l', strtotime($ud['date'])) ?>
+                                </small>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge <?= $isCurrent ? 'bg-success text-white' : 'bg-light text-dark border' ?>">
+                                    <?= $ud['slot_count'] ?> Slot
+                                </span>
+                                <?php if ($isCurrent): ?>
+                                    <div class="text-success small" style="font-size: 0.68rem;">Sedang Dilihat</div>
+                                <?php endif; ?>
+                            </div>
+                        </a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
         <div class="card card-panel p-4 mb-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="fw-bold text-dark mb-0"><i class="bi bi-calendar-x-fill text-danger me-2"></i> Hari Libur</h5>

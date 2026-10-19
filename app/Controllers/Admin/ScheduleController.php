@@ -35,14 +35,38 @@ class ScheduleController extends BaseController
         $prevDate = date('Y-m-d', strtotime($dateFilter . ' -1 day'));
         $nextDate = date('Y-m-d', strtotime($dateFilter . ' +1 day'));
 
+        // Query upcoming dates with slots count
+        $upcomingDates = $this->scheduleModel
+            ->select('date, count(*) as slot_count, sum(booked) as total_booked')
+            ->where('date >=', date('Y-m-d'))
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->findAll(60);
+
+        // Find nearest date with slots if current selected date has no slots
+        $nearestDate = null;
+        if (empty($slots)) {
+            $nearest = $this->scheduleModel
+                ->select('date, count(*) as slot_count')
+                ->where('date >=', $dateFilter)
+                ->groupBy('date')
+                ->orderBy('date', 'ASC')
+                ->first();
+            if ($nearest) {
+                $nearestDate = $nearest;
+            }
+        }
+
         $data = [
-            'title'      => 'Manajemen Jadwal & Slot Pelayanan - SI VERONICA',
-            'dateFilter' => $dateFilter,
-            'prevDate'   => $prevDate,
-            'nextDate'   => $nextDate,
-            'slots'      => $slots,
-            'officers'   => $officers,
-            'holidays'   => $holidays,
+            'title'         => 'Manajemen Jadwal & Slot Pelayanan - SI VERONICA',
+            'dateFilter'    => $dateFilter,
+            'prevDate'      => $prevDate,
+            'nextDate'      => $nextDate,
+            'slots'         => $slots,
+            'officers'      => $officers,
+            'holidays'      => $holidays,
+            'upcomingDates' => $upcomingDates,
+            'nearestDate'   => $nearestDate,
         ];
 
         return view('admin/schedules/index', $data);
@@ -240,12 +264,16 @@ class ScheduleController extends BaseController
             if ($skippedHolidayCount > 0) {
                 $msg .= "{$skippedHolidayCount} hari libur dilewati.";
             }
-            return redirect()->to(site_url("admin/schedules?date={$startDateStr}"))->with('message', $msg);
+            $targetDate = !empty($existingSlots) ? $existingSlots[0]['date'] : $startDateStr;
+            return redirect()->to(site_url("admin/schedules?date={$targetDate}"))->with('message', $msg);
         }
 
         $this->scheduleModel->insertBatch($batch);
 
-        $totalInserted = count($batch);
+        $totalInserted   = count($batch);
+        $firstActiveDate = $batch[0]['date'];
+        $lastActiveDate  = $batch[count($batch) - 1]['date'];
+
         $this->auditService->log(
             session()->get('user_id'),
             'create_recurring_schedule',
@@ -254,7 +282,7 @@ class ScheduleController extends BaseController
             "Membuat {$totalInserted} slot jadwal berulang dari {$startDateStr} s.d. {$endDateStr}."
         );
 
-        $successMsg = "Berhasil membuat {$totalInserted} slot jadwal pada {$processedDatesCount} hari kerja ({$startDateStr} s/d {$endDateStr}).";
+        $successMsg = "Berhasil membuat {$totalInserted} slot jadwal pada {$processedDatesCount} hari kerja ({$firstActiveDate} s/d {$lastActiveDate}).";
         if ($skippedHolidayCount > 0) {
             $successMsg .= " ({$skippedHolidayCount} hari libur nasional dilewati)";
         }
@@ -262,7 +290,7 @@ class ScheduleController extends BaseController
             $successMsg .= " ({$skippedExistingCount} slot yang sudah ada sebelumnya dilewati)";
         }
 
-        return redirect()->to(site_url("admin/schedules?date={$startDateStr}"))->with('message', $successMsg);
+        return redirect()->to(site_url("admin/schedules?date={$firstActiveDate}"))->with('message', $successMsg);
     }
 
     public function toggleStatus(int $id)
