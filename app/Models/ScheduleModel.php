@@ -26,13 +26,15 @@ class ScheduleModel extends Model
     /**
      * Get available slots for a specific date
      */
-    public function getAvailableSlots(string $date)
+    public function getAvailableSlots(string $date, bool $onlyActive = true)
     {
         $builder = $this->db->table($this->table);
         $builder->select('schedules.*, users.name as officer_name');
         $builder->join('users', 'users.id = schedules.assigned_officer_id', 'left');
         $builder->where('schedules.date', $date);
-        $builder->where('schedules.status', 'active');
+        if ($onlyActive) {
+            $builder->where('schedules.status', 'active');
+        }
         $builder->orderBy('schedules.start_time', 'ASC');
         
         $slots = $builder->get()->getResultArray();

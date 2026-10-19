@@ -53,6 +53,7 @@ $routes->group('admin', ['filter' => 'auth:superadmin,admin,officer,pimpinan'], 
     // Schedules Management
     $routes->get('schedules', 'Admin\ScheduleController::index');
     $routes->post('schedules', 'Admin\ScheduleController::store');
+    $routes->post('schedules/recurring', 'Admin\ScheduleController::storeRecurring');
     $routes->post('schedules/(:num)/toggle', 'Admin\ScheduleController::toggleStatus/$1');
     $routes->post('schedules/(:num)/delete', 'Admin\ScheduleController::delete/$1');
     $routes->post('schedules/holiday', 'Admin\ScheduleController::storeHoliday');

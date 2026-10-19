@@ -97,4 +97,41 @@ class ApplicationTest extends CIUnitTestCase
         $this->assertNotNull($saved);
         $this->assertSame('Menunggu Verifikasi', $saved['status']);
     }
+
+    public function testRecurringScheduleGeneration()
+    {
+        $schedModel = new ScheduleModel();
+        
+        // Target a 7-day window
+        $startDate = new \DateTime('2026-11-02'); // Monday
+        $endDate   = new \DateTime('2026-11-08'); // Sunday
+        $days      = [1, 2, 3, 4, 5]; // Monday to Friday
+        
+        $batch = [];
+        $curr = clone $startDate;
+        while ($curr <= $endDate) {
+            $dayOfWeek = (int)$curr->format('N');
+            if (in_array($dayOfWeek, $days, true)) {
+                $batch[] = [
+                    'date'       => $curr->format('Y-m-d'),
+                    'start_time' => '08:00:00',
+                    'end_time'   => '08:30:00',
+                    'capacity'   => 2,
+                    'booked'     => 0,
+                    'status'     => 'active',
+                ];
+            }
+            $curr->modify('+1 day');
+        }
+
+        // Exactly 5 workdays (Mon-Fri) should be generated out of 7 days
+        $this->assertCount(5, $batch);
+        $schedModel->insertBatch($batch);
+
+        $slots = $schedModel->where('date >=', '2026-11-02')
+                            ->where('date <=', '2026-11-08')
+                            ->where('capacity', 2)
+                            ->findAll();
+        $this->assertCount(5, $slots);
+    }
 }
